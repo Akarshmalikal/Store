@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1 v-text="sitename"></h1>
+        <div style="float:left;">
+            <img v-bind:src="lesson.image">   
+            <div><button>Add to Cart</button></div> 
+        </div>
+        
+        <div style="float:left;">
+            <h2 v-text="lesson.title"></h2>
+            <p>{{lesson.location}}</p>
+            <p>Price: <span v-text="lesson.price">
+            </span>
+            </p>
+            <p>Number of Spaces: {{lesson.stock}}</p>
+        </div>
+    </div>
+    
+    <script>
+            let app = new Vue({
+                el: '#app' ,
+                data: {
+                    sitename: "After School Club",
+
+                    lesson: {
+                        id: 1,
+                        title: "Math",
+                        location: "London" ,
+                        price: 100,
+                        stock: 5,
+                        image: "math.png"
+                    }
+                }
+            })
+
+
+    </script>
+</body>
+</html>

@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 4</title>
+    <title>Lesson Store</title>
     <script src="https://unpkg.com/vue"></script>
 </head>
 
 <body>
     <div id="app">
         <h1 v-text="sitename"></h1>
-        <div style="float:left;">
-            <img v-bind:src="lesson.image">   
-            <div><button>Add to Cart</button></div> 
+        <div style="float:left">
+            <img v-bind:src="lesson.image">    
         </div>
         
-        <div style="float:left;">
+        <div style="float:left">
             <h2 v-text="lesson.title"></h2>
             <p>{{lesson.location}}</p>
             <p>Price: <span v-text="lesson.price">
             </span>
             </p>
-            <p>Number of Spaces: {{lesson.stock}}</p>
+            <p>Number of Spaces: {{lesson.space}}</p>
+            <div id="toCart"><button id=btn v-on:click="addToCart">Add to Cart</button></div>
         </div>
     </div>
     
@@ -31,19 +31,30 @@
                 el: '#app' ,
                 data: {
                     sitename: "After School Club",
-
-                    lesson: {
+                        lesson: {
                         id: 1,
                         title: "Math",
                         location: "London" ,
                         price: 100,
-                        stock: 5,
+                        space: 10,
                         image: "math.png"
+                    },
+                    cart: [],
+                },
+                methods: {
+                    addToCart:function() {
+                        
+                        if (this.lesson.space > 0) {
+                            this.lesson.space -= 1; 
+                         } 
+                        if (this.lesson.space == 0){
+                          document.getElementById("toCart").innerHTML = "<button disabled>Add to cart</button>";
+                        }
+                        this.cart.push(this.lesson.title);
                     }
+                    
                 }
             })
-
-
     </script>
 </body>
 </html>

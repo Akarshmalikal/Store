@@ -1,0 +1,14 @@
+body{
+    background-color: beige;
+}
+.topnav {
+    float: center;
+    width: 100%;
+    list-style-type: square;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(218, 216, 216);   
+    
+}

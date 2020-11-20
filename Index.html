@@ -4,57 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson Store</title>
+    <title>School Club</title>
     <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 
 <body>
-    <div id="app">
+    <div id="app"> 
+        <div class="topnav">
         <h1 v-text="sitename"></h1>
-        <div style="float:left">
-            <img v-bind:src="lesson.image">    
+        <button @click='showCheckout' style="float: right;">{{ cartItemCount }}<span class="fas fa-cart-plus"></span>Checkout</button>
         </div>
-        
-        <div style="float:left">
+        <div v-if='showLesson' >
+            <img v-bind:src="lesson.image">
             <h2 v-text="lesson.title"></h2>
             <p>{{lesson.location}}</p>
             <p>Price: <span v-text="lesson.price">
-            </span>
+                </span>
             </p>
             <p>Number of Spaces: {{lesson.space}}</p>
-            <div id="toCart"><button id=btn v-on:click="addToCart">Add to Cart</button></div>
+            <button @click="addToCart" v-if="canAddToCart">Add to cart</button>
+            <button disabled='disabled' v-else>Add to cart</button>
+
         </div>
+        <div v-else>
+            <h2>Checkout</h2>
+            <p>
+            <strong>Name:</strong><input type="text" v-model.trim='order.name'>
+        </p>
+        <p>
+            <strong>Phone:</strong><input v-model.number='order.phone'>
+        </p>
+        <h2>Order Information</h2>
+        <p>Name:{{order.name}}</p>
+        <p>Phone:{{order.phone}}</p>
+        <button @click='submitForm'>Complete Order</button>
+        </div>
+        
     </div>
-    
+
+    </div>
+
     <script>
-            let app = new Vue({
-                el: '#app' ,
-                data: {
-                    sitename: "After School Club",
-                        lesson: {
-                        id: 1,
-                        title: "Math",
-                        location: "London" ,
-                        price: 100,
-                        space: 10,
-                        image: "math.png"
-                    },
-                    cart: [],
+        let app = new Vue({
+            el: '#app',
+            data: {
+                sitename: "Welcome to School Club",
+                lesson: {
+                    id: 1,
+                    title: "Math",
+                    location: "London",
+                    price: 100,
+                    space: 5,
+                    image: "math.png",
                 },
-                methods: {
-                    addToCart:function() {
-                        
-                        if (this.lesson.space > 0) {
-                            this.lesson.space -= 1; 
-                         } 
-                        if (this.lesson.space == 0){
-                          document.getElementById("toCart").innerHTML = "<button disabled>Add to cart</button>";
-                        }
-                        this.cart.push(this.lesson.title);
-                    }
-                    
+                cart: [],
+                showLesson: true,
+                order: {
+                    name: '',
+                    phone: '',
                 }
-            })
+            },
+
+            methods: {
+                addToCart: function () {
+                    if (this.lesson.space > 0) {
+                        this.cart.push(this.lesson.id)
+                        this.lesson.space -= 1;
+                    }
+                },
+
+                showCheckout() {
+                    this.showLesson = this.showLesson ? false : true;
+                },
+                
+                submitForm () {
+                    alert('Order Confirmation !')
+                }
+
+            },
+            computed: {
+                cartItemCount: function () {
+                    return this.cart.length || '';
+                },
+                canAddToCart: function () {
+                    return this.lesson.space > this.cartItemCount;
+                }
+            }
+        });
     </script>
 </body>
+
 </html>

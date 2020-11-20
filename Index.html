@@ -11,18 +11,17 @@
 </head>
 
 <body>
-    <div id="app"> 
+    <div id="app">
         <div class="topnav">
-        <h1 v-text="sitename"></h1>
-        <button @click='showCheckout' style="float: right;">{{ cartItemCount }}<span class="fas fa-cart-plus"></span>Checkout</button>
+            <h1 v-text="sitename"></h1>
+            <button @click='showCheckout' style="float: right;">{{ cartItemCount }}<span
+                    class="fas fa-cart-plus"></span>Checkout</button>
         </div>
-        <div v-if='showLesson' >
+        <div v-if='showLesson'>
             <img v-bind:src="lesson.image">
             <h2 v-text="lesson.title"></h2>
             <p>{{lesson.location}}</p>
-            <p>Price: <span v-text="lesson.price">
-                </span>
-            </p>
+            <p>Price: <span v-text="lesson.price"></span></p>
             <p>Number of Spaces: {{lesson.space}}</p>
             <button @click="addToCart" v-if="canAddToCart">Add to cart</button>
             <button disabled='disabled' v-else>Add to cart</button>
@@ -30,18 +29,15 @@
         </div>
         <div v-else>
             <h2>Checkout</h2>
-            <p>
-            <strong>Name:</strong><input type="text" v-model.trim='order.name'>
-        </p>
-        <p>
-            <strong>Phone:</strong><input v-model.number='order.phone'>
-        </p>
-        <h2>Order Information</h2>
-        <p>Name:{{order.name}}</p>
-        <p>Phone:{{order.phone}}</p>
-        <button @click='submitForm'>Complete Order</button>
+            <p><strong>Name:</strong><input type="text" v-model.trim='order.name'></p>
+            <p><strong>Phone:</strong><input type="number" v-model.number='order.phone'></p>
+            <h2>Order Information</h2>
+            <p>Name:{{order.name}}</p>
+            <p>Phone:{{order.phone}}</p>
+            <button @click='submitForm' v-if="checkOut">Complete Order</button>
+            <button disabled='disabled' v-else>Complete Order</button>
         </div>
-        
+
     </div>
 
     </div>
@@ -78,8 +74,8 @@
                 showCheckout() {
                     this.showLesson = this.showLesson ? false : true;
                 },
-                
-                submitForm () {
+
+                submitForm() {
                     alert('Order Confirmation !')
                 }
 
@@ -90,6 +86,9 @@
                 },
                 canAddToCart: function () {
                     return this.lesson.space > this.cartItemCount;
+                },
+                checkOut () {
+                    return this.order.phone && this.order.name.length > 0;
                 }
             }
         });

@@ -66,7 +66,7 @@
                 addToCart(lesson) {
                     if (lesson.space > 0) {
                         this.cart.push(lesson.id)
-                        this.lesson.space -= 1;
+                        lesson.space -= 1
                     }
                 },
 
@@ -93,14 +93,16 @@
                     return this.cart.length || '';
                 },
 
-                checkOut() {
+                checkOut(lesson) {
                     return this.order.phone && this.order.name.length > 0;
                 },
-                checkCart: function () {
+
+                checkCart: function (lesson) {
                     return this.cartItemCount > 0;
                 },
-                showCartItems() {
-                    return this.cart;
+
+                showCartItems(lesson) {
+                    return this.cart.lesson.id;
                 }
             }
         });

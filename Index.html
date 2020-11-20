@@ -36,6 +36,7 @@
             <p>Phone:{{order.phone}}</p>
             <button @click='submitForm' v-if="checkOut">Complete Order</button>
             <button disabled='disabled' v-else>Complete Order</button>
+            <button @click='backToLesson'>Back</button>
         </div>
 
     </div>
@@ -77,6 +78,10 @@
 
                 submitForm() {
                     alert('Order Confirmation !')
+                },
+
+                backToLesson(){
+                    this.showLesson = true;
                 }
 
             },

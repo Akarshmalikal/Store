@@ -21,17 +21,17 @@
         </div>
         <div v-if='showLessons' style="margin-left: 35%;margin-top: 5%;">
             <div v-for="lesson in lessons">
-            <img v-bind:src="lesson.image" style="height: 200px; width: 50%;">
-            <h2 v-text="lesson.title"></h2>
-            <p>Location: {{lesson.location}}</p>
-            <p>Price: <span v-text="lesson.price"></span></p>
-            <p>Number of Spaces: {{lesson.space}}</p>
-            <button @click="addToCart(lesson)" v-if="canAddToCart">Add to cart</button>
-            <button disabled='disabled' v-else>Add to cart</button>
+                <img v-bind:src="lesson.image" style="height: 200px; width: 50%;">
+                <h2 v-text="lesson.title"></h2>
+                <p>Location: {{lesson.location}}</p>
+                <p>Price: <span v-text="lesson.price"></span></p>
+                <p>Number of Spaces: {{lesson.space}}</p>
+                <button @click="addToCart(lesson)" v-if="canAddToCart">Add to cart</button>
+                <button disabled='disabled' v-else>Add to cart</button>
             </div>
+        </div>
 
-            
-    </div>
+
         <div v-else='showCartItems'>
             <h2>Checkout</h2>
             <p><strong>Name:</strong><input type="text" v-model.trim='order.name'></p>
@@ -44,7 +44,7 @@
             <button @click='backToLessons'>Back</button>
         </div>
 
-    </div>
+
 
     </div>
 
@@ -53,53 +53,56 @@
             el: '#app',
             data: {
                 sitename: "Welcome to School Club",
-                lessons:lessons,
-            cart: [],
-            showLessons: true,
-            order: {
-                name: '',
-                phone: '',
-            }
-        },
-
-            methods: {
-            addToCart: function (lessons) {
-                if (this.lessons.space > 0) {
-                    this.cart.push(lesson.id)
-                    this.lesson.space -= 1;
+                lessons: lessons,
+                cart: [],
+                showLessons: true,
+                order: {
+                    name: '',
+                    phone: '',
                 }
             },
 
-            showCheckout() {
-                this.showLessons = this.showLessons ? false : true;
+            methods: {
+                addToCart(lesson) {
+                    if (lesson.space > 0) {
+                        this.cart.push(lesson.id)
+                        this.lesson.space -= 1;
+                    }
+                },
+
+                showCheckout() {
+                    this.showLessons = this.showLessons ? false : true;
+                },
+
+                submitForm() {
+                    alert('Order Confirmation !')
+                },
+
+                backToLessons() {
+                    this.showLessons = true;
+                },
+
+                canAddToCart(lesson) {
+                    return lessons.space > this.cartItemCount(lesson.id);
+                },
+
             },
 
-            submitForm() {
-                alert('Order Confirmation !')
-            },
-
-            backToLessons() {
-                this.showLessons = true;
-            }
-
-        },
             computed: {
-            cartItemCount: function () {
-                return this.cart.length || '';
-            },
-            canAddToCart: function () {
-                return this.lessons.space > this.cartItemCount;
-            },
-            checkOut() {
-                return this.order.phone && this.order.name.length > 0;
-            },
-            checkCart: function () {
-                return this.cartItemCount > 0;
-            },
-            showCartItems() {
-                return this.cart;
+                cartItemCount: function (lesson) {
+                    return this.cart.length || '';
+                },
+
+                checkOut() {
+                    return this.order.phone && this.order.name.length > 0;
+                },
+                checkCart: function () {
+                    return this.cartItemCount > 0;
+                },
+                showCartItems() {
+                    return this.cart;
+                }
             }
-        }
         });
     </script>
 </body>

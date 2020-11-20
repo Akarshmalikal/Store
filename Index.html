@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Club</title>
     <script src="https://unpkg.com/vue"></script>
+    <script src="lessons.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
@@ -14,20 +15,24 @@
     <div id="app">
         <div class="topnav">
             <h1 v-text="sitename"></h1>
-            <button @click='showCheckout' style="float: right;">{{ cartItemCount }}<span
+            <button @click='showCheckout' v-if='checkCart' style="float: right;">{{ cartItemCount }}<span
                     class="fas fa-cart-plus"></span>Checkout</button>
+            <button style="float: right;" disabled='disabled' v-else>Checkout</button>
         </div>
-        <div v-if='showLesson'>
-            <img v-bind:src="lesson.image">
+        <div v-if='showLessons' style="margin-left: 35%;margin-top: 5%;">
+            <div v-for="lesson in lessons">
+            <img v-bind:src="lesson.image" style="height: 200px; width: 50%;">
             <h2 v-text="lesson.title"></h2>
-            <p>{{lesson.location}}</p>
+            <p>Location: {{lesson.location}}</p>
             <p>Price: <span v-text="lesson.price"></span></p>
             <p>Number of Spaces: {{lesson.space}}</p>
-            <button @click="addToCart" v-if="canAddToCart">Add to cart</button>
+            <button @click="addToCart(lesson)" v-if="canAddToCart">Add to cart</button>
             <button disabled='disabled' v-else>Add to cart</button>
+            </div>
 
-        </div>
-        <div v-else>
+            
+    </div>
+        <div v-else='showCartItems'>
             <h2>Checkout</h2>
             <p><strong>Name:</strong><input type="text" v-model.trim='order.name'></p>
             <p><strong>Phone:</strong><input type="number" v-model.number='order.phone'></p>
@@ -36,7 +41,7 @@
             <p>Phone:{{order.phone}}</p>
             <button @click='submitForm' v-if="checkOut">Complete Order</button>
             <button disabled='disabled' v-else>Complete Order</button>
-            <button @click='backToLesson'>Back</button>
+            <button @click='backToLessons'>Back</button>
         </div>
 
     </div>
@@ -48,54 +53,53 @@
             el: '#app',
             data: {
                 sitename: "Welcome to School Club",
-                lesson: {
-                    id: 1,
-                    title: "Math",
-                    location: "London",
-                    price: 100,
-                    space: 5,
-                    image: "math.png",
-                },
-                cart: [],
-                showLesson: true,
-                order: {
-                    name: '',
-                    phone: '',
-                }
-            },
+                lessons:lessons,
+            cart: [],
+            showLessons: true,
+            order: {
+                name: '',
+                phone: '',
+            }
+        },
 
             methods: {
-                addToCart: function () {
-                    if (this.lesson.space > 0) {
-                        this.cart.push(this.lesson.id)
-                        this.lesson.space -= 1;
-                    }
-                },
-
-                showCheckout() {
-                    this.showLesson = this.showLesson ? false : true;
-                },
-
-                submitForm() {
-                    alert('Order Confirmation !')
-                },
-
-                backToLesson(){
-                    this.showLesson = true;
+            addToCart: function (lessons) {
+                if (this.lessons.space > 0) {
+                    this.cart.push(lesson.id)
+                    this.lesson.space -= 1;
                 }
-
             },
-            computed: {
-                cartItemCount: function () {
-                    return this.cart.length || '';
-                },
-                canAddToCart: function () {
-                    return this.lesson.space > this.cartItemCount;
-                },
-                checkOut () {
-                    return this.order.phone && this.order.name.length > 0;
-                }
+
+            showCheckout() {
+                this.showLessons = this.showLessons ? false : true;
+            },
+
+            submitForm() {
+                alert('Order Confirmation !')
+            },
+
+            backToLessons() {
+                this.showLessons = true;
             }
+
+        },
+            computed: {
+            cartItemCount: function () {
+                return this.cart.length || '';
+            },
+            canAddToCart: function () {
+                return this.lessons.space > this.cartItemCount;
+            },
+            checkOut() {
+                return this.order.phone && this.order.name.length > 0;
+            },
+            checkCart: function () {
+                return this.cartItemCount > 0;
+            },
+            showCartItems() {
+                return this.cart;
+            }
+        }
         });
     </script>
 </body>

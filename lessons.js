@@ -5,7 +5,7 @@ let lessons = [
         "location": "London",
         "price": 100,
         "space": 5,
-        "image": "math.png",
+        "image": "img/math.png",
     },
     {
         "id": 2,
@@ -13,7 +13,7 @@ let lessons = [
         "location": "London",
         "price": 90,
         "space": 5,
-        "image": "science.png",
+        "image": "img/science.png",
     },
     {
         "id": 3,
@@ -21,15 +21,15 @@ let lessons = [
         "location": "London",
         "price": 110,
         "space": 5,
-        "image": "Music.png",
+        "image": "img/Music.png",
     },
     {
         "id": 4,
         "title": "Geology",
         "location": "Glassglow",
-        "price": 120,
+        "price": 10,
         "space": 5,
-        "image": "geology.png",
+        "image": "img/geology.png",
     },
     {
         "id": 5,
@@ -37,7 +37,7 @@ let lessons = [
         "location": "Sutton",
         "price": 150,
         "space": 5,
-        "image": "histroy.png",
+        "image": "img/histroy.png",
     },
     {
         "id": 6,
@@ -45,7 +45,7 @@ let lessons = [
         "location": "Wales",
         "price": 80,
         "space": 5,
-        "image": "Biology.png",
+        "image": "img/Biology.png",
     },
     {
         "id": 7,
@@ -53,7 +53,7 @@ let lessons = [
         "location": "Reading",
         "price": 70,
         "space": 5,
-        "image": "karate.png",
+        "image": "img/karate.png",
     },
     {
         "id": 8,
@@ -61,7 +61,7 @@ let lessons = [
         "location": "Oxford",
         "price": 100,
         "space": 5,
-        "image": "english.png",
+        "image": "img/english.png",
     },
     {
         "id": 9,
@@ -69,7 +69,7 @@ let lessons = [
         "location": "Cardif",
         "price": 160,
         "space": 5,
-        "image": "computing.png",
+        "image": "img/computing.png",
     },
     {
         "id": 10,
@@ -77,6 +77,6 @@ let lessons = [
         "location": "Birstol",
         "price": 190,
         "space": 5,
-        "image": "automation.png",
+        "image": "img/automation.png",
     },
 ]

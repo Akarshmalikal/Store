@@ -18,15 +18,28 @@
             <button @click='showCheckout' v-if='checkCart' style="float: right;">{{ cartItemCount }}<span
                     class="fas fa-cart-plus"></span>Checkout</button>
             <button style="float: right;" disabled='disabled' v-else>Checkout</button>
+            
+
         </div>
         <div v-if='showLessons' style="margin-left: 35%;margin-top: 5%;">
-            <div v-for="lesson in lessons">
+            <p style="float: right;">Sort As<br>
+                <input type="radio" id="price" value="price" v-model="sortedLessons"> <label for="price">Price</label><br>
+                <input type="radio" id="location" value="location" v-model="sortedLessons"> <label for="location">Location</label><br>
+                <input type="radio" id="subject" value="subject" v-model="sortedLessons"> <label for="subject">Subject</label><br>
+                <input type="radio" id="avaiablility" value="avaiablility" v-model="sortedLessons"> <label for="avaiablility">Avaiability</label><br>
+                <p1>Order<br>
+                    <input type="radio" id="ascending" value="ascending" v-model="sortedLessons"> <label for="ascending">Ascending</label><br>
+                <input type="radio" id="descending" value="descending" v-model="sortedLessons"> <label for="descending">Descending</label><br>
+                </p1>
+            </p>
+               
+            <div v-for="lesson in lessons">            
                 <img v-bind:src="lesson.image" style="height: 200px; width: 50%;">
                 <h2 v-text="lesson.title"></h2>
                 <p>Location: {{lesson.location}}</p>
                 <p>Price: <span v-text="lesson.price"></span></p>
                 <p>Number of Spaces: {{lesson.space}}</p>
-                <button @click="addToCart(lesson)" v-if="canAddToCart">Add to cart</button>
+                <button @click="addToCart(lesson)" if-v="canAddToCart">Add to cart</button>
                 <button disabled='disabled' v-else>Add to cart</button>
             </div>
         </div>
@@ -66,7 +79,7 @@
                 addToCart(lesson) {
                     if (lesson.space > 0) {
                         this.cart.push(lesson.id)
-                        lesson.space -= 1
+                        lesson.space -= 1;
                     }
                 },
 
@@ -83,8 +96,19 @@
                 },
 
                 canAddToCart(lesson) {
-                    return lessons.space > this.cartItemCount(lesson.id);
+                    return lessons.space > this.cartCount(lessons.id);
                 },
+                
+                cartCount(id) {
+                    let count = 0;
+                    for(let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id){
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+                
 
             },
 
@@ -103,6 +127,15 @@
 
                 showCartItems(lesson) {
                     return this.cart.lesson.id;
+                },
+
+                sortdLessons() {
+                    function compare(a, b){
+                        if (a.price < b.price) return 1;
+                        if (a.price < b.price) return -1;
+                        return 0;
+                    }
+                    return this.lessons.sort(compare);
                 }
             }
         });
